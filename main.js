@@ -2,9 +2,24 @@ const express = require("express");
 const bodyParser = require("body-parser"); //För att kunna läsa EJS body data
 const mongoose = require("mongoose");
 const router = require("./routes/todoRoute");
+const nodeSass = require("node-sass-middleware");
+
 require("dotenv").config();
 
 const app = express();
+
+// SASS //
+
+app.use(nodeSass(
+
+    {
+        src: __dirname + "/scss",
+        dest: __dirname + "/public/css"
+    }
+
+))
+
+////////
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
