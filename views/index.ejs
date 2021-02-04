@@ -13,15 +13,21 @@
 
     <%- include("add-data.ejs") %>
 
-        <% for(let i=0; i<data.length; i++) { %>
+        <%  if(typeof error !== undefined && error !=="empty") { %>
+            <%- include("error.ejs") %>
+                <% } %>
 
-            <div>
-                <%= data[i].name %>.
-                    <!-- <span> Datum: <%= data[i].date %> </span> -->
-                    <a href="/edit/<%= data[i]._id %>">Edit</a>
-                    <a href="/delete/<%= data[i]._id %>">Delete</a>
-            </div>
-            <% } %>
+
+
+                    <% for(let i=0; i<data.length; i++) { %>
+
+                        <div>
+                            <%= data[i].name %>.
+                                <!-- <span> Datum: <%= data[i].date %> </span> -->
+                                <a href="/edit/<%= data[i]._id %>">Edit</a>
+                                <a href="/delete/<%= data[i]._id %>">Delete</a>
+                        </div>
+                        <% } %>
 
 </body>
 

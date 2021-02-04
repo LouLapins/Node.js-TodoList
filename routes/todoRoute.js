@@ -6,27 +6,29 @@ const router = express.Router();
 
 router.get("/", async(req, res) => {
 
-    const data = await Task.find();
+    try {
+        const data = await Task.find();
+        console.log(data);
+        res.render("index.ejs", { data, error: "empty" })
 
-    res.render("index.ejs", { data: data });
+    } catch (err) {
+        const error = err
+        res.render("error.ejs", { error: err })
+    }
+
 })
 
 router.post("/", async(req, res) => {
 
-    await new Task({ name: req.body.name }).save();
     console.log(req.body.name);
+    try {
+        await new Task({ name: req.body.name }).save();
+        res.redirect("/");
 
-    res.redirect("/");
+    } catch (err) {
+        res.render("error.ejs", { error: err })
+    }
 
-})
-
-// DELETE //
-
-router.get("/delete/:id", async(req, res) => {
-
-    await Task.deleteOne({ _id: req.params.id });
-
-    res.redirect("/");
 })
 
 
@@ -48,5 +50,17 @@ router.post("/edit", async(req, res) => {
 
     res.redirect("/")
 })
+
+
+// DELETE //
+
+router.get("/delete/:id", async(req, res) => {
+
+    await Task.deleteOne({ _id: req.params.id });
+
+    res.redirect("/");
+})
+
+
 
 module.exports = router;
