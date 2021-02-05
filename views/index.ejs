@@ -4,29 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Task Database</title>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Hello from ejs</h1>
+    <h1>Things to do</h1>
 
     <%- include("add-data.ejs") %>
 
-        <%  if(typeof error !== undefined && error !=="empty") { %>
-            <%- include("error.ejs") %>
-                <% } %>
 
 
+        <a class="sortBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)%>&&sorted=-1"><i class="fas fa-sort"></i> Newest</a>
+        <a class="sortBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)%>&&sorted=1"><i class="fas fa-sort"></i> Oldest</a>
 
-                    <% for(let i=0; i<data.length; i++) { %>
 
-                        <div>
-                            <%= data[i].name %>.
-                                <!-- <span> Datum: <%= data[i].date %> </span> -->
-                                <a href="/edit/<%= data[i]._id %>">Edit</a>
-                                <a href="/delete/<%= data[i]._id %>">Delete</a>
-                        </div>
+        <% for(let i=0; i<data.length; i++) { %>
+
+            <div id="taskRow">
+                <span id="taskName"><%= data[i].name %></span>
+                <span id="taskDate"><%= data[i].date.toString().split(" ").slice(0, 4).join(" ") %></span>
+                <a id="editBtn" href="/edit/<%= data[i]._id %>"><i class="fas fa-pencil-alt"></i></a>
+                <a id="deleteBtn" href="/delete/<%= data[i]._id %>"><i class="fas fa-times"></i></a>
+            </div>
+            <% } %>
+
+                <% if(totalPages !== dataToShow/dataToShowPerReq) { %>
+                    <a class="paginationBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)+1%>">Show more</a>
+
+                    <% } else { %>
+
+                        <a class="paginationBtn" href="/?page=1">Show less</a>
+
                         <% } %>
 
 </body>

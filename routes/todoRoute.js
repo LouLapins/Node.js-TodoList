@@ -6,13 +6,23 @@ const router = express.Router();
 
 router.get("/", async(req, res) => {
 
+    const sorted = +req.query.sorted || 1;
+    const page = +req.query.page || 1;
+
     try {
-        const data = await Task.find();
-        console.log(data);
-        res.render("index.ejs", { data, error: "empty" })
+        const totalData = await Task.find().countDocuments();
+
+        const dataToShowPerReq = 5;
+
+        const totalPages = Math.ceil(totalData / dataToShowPerReq);
+
+        const dataToShow = dataToShowPerReq * page;
+
+        const data = await Task.find().limit(dataToShow).sort({ date: sorted });
+
+        res.render("index.ejs", { data, totalData, totalPages, dataToShow, dataToShowPerReq, errors: "empty" })
 
     } catch (err) {
-        const error = err
         res.render("error.ejs", { error: err })
     }
 
