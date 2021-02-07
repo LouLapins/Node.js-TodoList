@@ -5,17 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Database</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <form action="/edit" method="post">
 
-        <input type="text" name="name" value="<%= task.name %>">
-        <input type="text" name="id" value="<%= task._id %>" hidden>
-        <button type="submit">Update</button>
+    <h1>Your tasks</h1>
+
+    <%- include("add-data.ejs") %>
+
+        <div id="list">
+            <div id="sortBtnWrapper">
+                Sort by
+                <a class="sortBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)%>&&sorted=-1">Newest</a> /
+                <a class="sortBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)%>&&sorted=1">Oldest</a>
+            </div>
+
+            <% for(let i=0; i<data.length; i++) { %>
+
+                <% if (data[i]._id == id) { %>
+
+                    <div class="taskRow">
+
+                        <div class="task">
+                            <form id="editForm" action="/edit" method="post">
+                                <button id="checkBtn" type="submit"><i class="fas fa-check"></i></button>
+                                <input type="text" name="name" value="<%= task.name %>" autofocus>
+                                <input type="text" name="id" value="<%= task._id %>" hidden>
+
+                            </form>
+                        </div>
+                        <div id="backBtn">
+                            <a href="/"><i class="fas fa-undo"></i></a>
+                        </div>
+                    </div>
+                    <% } else { %>
+                        <div class="taskRow">
+                            <div class="task">
+                                <a id="editBtn" href="/edit/<%= data[i]._id %>"><i class="fas fa-pen"></i></a>
+                                <div id="nameDateWrapper">
+                                    <span id="taskName"><%= data[i].name %></span>
+                                    <span id="taskDate"><%= data[i].date.toString().split(" ").slice(0, 4).join(" ") %></span>
+                                </div>
+                            </div>
+
+                            <div id="deleteBtn">
+                                <a href="/delete/<%= data[i]._id %>"><i class="fas fa-times"></i></a>
+                            </div>
+                        </div>
+                        <% } %>
+
+                            <% } %>
+
+                                <% if(totalPages !== dataToShow/dataToShowPerReq) { %>
+                                    <a class="paginationBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)+1%>"><i class="fas fa-chevron-down"></i></a>
+
+                                    <% } else { %>
+
+                                        <a class="paginationBtn" href="/?page=1"><i class="fas fa-chevron-up"></i></a>
+
+                                        <% } %>
 
 
-    </form>
 </body>
 
 </html>

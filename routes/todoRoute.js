@@ -48,10 +48,29 @@ router.post("/", async(req, res) => {
 // UPDATE (EDIT) //
 
 router.get("/edit/:id", async(req, res) => {
+    const sorted = +req.query.sorted || 1;
+    const page = +req.query.page || 1;
 
-    const task = await Task.findOne({ _id: req.params.id });
+    try {
+        const task = await Task.findOne({ _id: req.params.id });
 
-    res.render("edit.ejs", { task: task });
+        const totalData = await Task.find().countDocuments();
+
+        const dataToShowPerReq = 5;
+
+        const totalPages = Math.ceil(totalData / dataToShowPerReq);
+
+        const dataToShow = dataToShowPerReq * page;
+
+        const data = await Task.find().limit(dataToShow).sort({ date: sorted });
+
+        res.render("edit.ejs", { task: task, id: req.params.id, data, totalData, totalPages, dataToShow, dataToShowPerReq, errors: "empty" })
+
+    } catch (err) {
+        res.render("error.ejs", { error: err })
+    }
+
+
 
 })
 
