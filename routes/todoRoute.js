@@ -3,6 +3,7 @@ const Task = require("../model/task");
 const router = express.Router();
 
 
+// READ //
 
 router.get("/", async(req, res) => {
 
@@ -20,13 +21,15 @@ router.get("/", async(req, res) => {
 
         const data = await Task.find().limit(dataToShow).sort({ date: sorted });
 
-        res.render("index.ejs", { data, totalData, totalPages, dataToShow, dataToShowPerReq, errors: "empty" })
+        res.render("index.ejs", { id: req.params.id, data, totalData, totalPages, dataToShow, dataToShowPerReq, errors: "empty" })
 
     } catch (err) {
         res.render("error.ejs", { error: err })
     }
 
 })
+
+// CREATE // 
 
 router.post("/", async(req, res) => {
 
@@ -42,7 +45,7 @@ router.post("/", async(req, res) => {
 })
 
 
-// EDIT //
+// UPDATE (EDIT) //
 
 router.get("/edit/:id", async(req, res) => {
 

@@ -1,5 +1,25 @@
-<% if(typeof error !== undefined) { %>
-    <%= error %>
-        <a href="/">Go to home page</a>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Database</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <% if(typeof error !== undefined) { %>
+
+        <h1>Oops! Something went wrong. </h1>
+        <div class="errorMsg">
+            <p>
+                <%= error %>
+            </p>
+            <br>
+            <a href="/">Click here to try again</a>
+        </div>
         <% } %>
+</body>
+
+</html>
