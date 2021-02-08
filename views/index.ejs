@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/main.css">
-</head>
+<%- include('include/_head') %>
 
-<body>
-    <h1>Hello from ejs</h1>
+    <body>
 
-    <%- include("add-data.ejs") %>
+        <%- include('include/_add-sort') %>
 
-        <% for(let i=0; i<data.length; i++) { %>
+            <% for(let i=0; i<data.length; i++) { %>
 
-            <div>
-                <%= data[i].name %>.
-                    <!-- <span> Datum: <%= data[i].date %> </span> -->
-                    <a href="/edit/<%= data[i]._id %>">Edit</a>
-                    <a href="/delete/<%= data[i]._id %>">Delete</a>
-            </div>
-            <% } %>
+                <div class="taskRow">
 
-</body>
+                    <div class="task">
+
+                        <a id="editBtn" href="/edit/<%= data[i]._id %>?page=<%= page %>&&sorted=<%= sorted %>"><i class="fas fa-pen"></i></a>
+                        <div id="nameDateWrapper">
+                            <span id="taskName"><%= data[i].name %></span>
+                            <span id="taskDate"><%= data[i].date.toString().split(" ").slice(0, 4).join(" ") %></span>
+                        </div>
+                    </div>
+                    <div id="deleteBtn">
+                        <a href="/delete/<%= data[i]._id %>"><i class="fas fa-times"></i></a>
+                    </div>
+
+                </div>
+                <% } %>
+
+                    <%- include('include/_pagination') %>
+
+    </body>
 
 </html>

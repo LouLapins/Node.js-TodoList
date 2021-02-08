@@ -1,0 +1,16 @@
+<h1>Your tasks</h1>
+
+<form id="addTaskForm" action="/" method="post">
+
+    <input type="text" name="name" id="taskInput" placeholder="Add a new task...">
+    <button id="addTaskBtn" type="submit">+</button>
+
+
+</form>
+
+<div id="list">
+    <div id="sortBtnWrapper">
+        Sort by
+        <a class="sortBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)%>&&sorted=-1">Newest</a> /
+        <a class="sortBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)%>&&sorted=1">Oldest</a>
+    </div>
