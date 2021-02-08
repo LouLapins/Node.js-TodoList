@@ -21,10 +21,10 @@ router.get("/", async(req, res) => {
 
         const data = await Task.find().limit(dataToShow).sort({ date: sorted });
 
-        res.render("index.ejs", { id: req.params.id, data, totalData, totalPages, dataToShow, dataToShowPerReq, errors: "empty" })
+        res.render("index.ejs", { id: req.params.id, sorted, page, data, totalData, totalPages, dataToShow, dataToShowPerReq, errors: "empty" })
 
     } catch (err) {
-        res.render("error.ejs", { error: err })
+        res.render("error.ejs", { error: err });
     }
 
 })
@@ -33,13 +33,12 @@ router.get("/", async(req, res) => {
 
 router.post("/", async(req, res) => {
 
-    console.log(req.body.name);
     try {
         await new Task({ name: req.body.name }).save();
         res.redirect("/");
 
     } catch (err) {
-        res.render("error.ejs", { error: err })
+        res.render("error.ejs", { error: err });
     }
 
 })
@@ -64,10 +63,10 @@ router.get("/edit/:id", async(req, res) => {
 
         const data = await Task.find().limit(dataToShow).sort({ date: sorted });
 
-        res.render("edit.ejs", { task: task, id: req.params.id, data, totalData, totalPages, dataToShow, dataToShowPerReq, errors: "empty" })
+        res.render("edit.ejs", { task: task, id: req.params.id, sorted, page, data, totalData, totalPages, dataToShow, dataToShowPerReq, errors: "empty" });
 
     } catch (err) {
-        res.render("error.ejs", { error: err })
+        res.render("error.ejs", { error: err });
     }
 
 
@@ -76,11 +75,14 @@ router.get("/edit/:id", async(req, res) => {
 
 router.post("/edit", async(req, res) => {
 
-    console.log(req.body);
+    const sorted = +req.query.sorted || 1;
+    const page = +req.query.page || 1;
 
-    await Task.updateOne({ _id: req.body.id }, { name: req.body.name })
 
-    res.redirect("/")
+    await Task.updateOne({ _id: req.body.id }, { name: req.body.name });
+
+    res.redirect(`/?page=${page}&&sorted=${sorted}`);
+
 })
 
 
