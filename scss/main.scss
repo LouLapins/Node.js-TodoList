@@ -5,10 +5,7 @@ body {
     height: 100%;
     margin: 0;
     background-color: $main-clr;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    @include flexCenter(column);
     font-family: $main-font;
     .errorMsg {
         text-align: center;
@@ -28,9 +25,7 @@ body {
     }
     #addTaskForm {
         width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include flexCenter(row);
         #addTaskBtn {
             background-color: $accent-clr;
             color: white;
@@ -66,10 +61,7 @@ body {
         background-color: white;
         border-radius: 50px;
         box-shadow: $shadow;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+        @include flexCenter(column);
         padding: 5% 0 5% 0;
         #sortBtnWrapper,
         .sortBtn {
@@ -111,9 +103,7 @@ body {
                     height: 1.5rem;
                     border: 2px solid $accent-clr;
                     border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
+                    @include flexCenter(row);
                     font-size: 0.8rem;
                     i:hover {
                         color: $accent-clr;
@@ -134,7 +124,7 @@ body {
                         font-size: 16px;
                         font-family: $main-font;
                         font-weight: $fw-light;
-                        margin: 0 0 1.5rem 0.8rem;
+                        margin: 0 0 2rem 0.8rem;
                     }
                 }
             }
@@ -152,6 +142,28 @@ body {
             i:hover {
                 color: $alt-clr;
             }
+        }
+    }
+}
+
+// Media queries //
+@media screen and(min-width: 768px) {
+    body {
+        #list {
+            width: 80%;
+        }
+    }
+}
+
+@media screen and(min-width: 992px) {
+    body {
+        #addTaskForm {
+            #taskInput {
+                width: 40%;
+            }
+        }
+        #list {
+            width: 50%;
         }
     }
 }

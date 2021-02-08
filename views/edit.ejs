@@ -13,62 +13,45 @@
 
 <body>
 
-    <h1>Your tasks</h1>
+    <%- include('include/_add-sort') %>
 
-    <%- include("add-data.ejs") %>
+        <% for(let i=0; i<data.length; i++) { %>
 
-        <div id="list">
-            <div id="sortBtnWrapper">
-                Sort by
-                <a class="sortBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)%>&&sorted=-1">Newest</a> /
-                <a class="sortBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)%>&&sorted=1">Oldest</a>
-            </div>
+            <% if (data[i]._id == id) { %>
 
-            <% for(let i=0; i<data.length; i++) { %>
+                <div class="taskRow">
 
-                <% if (data[i]._id == id) { %>
+                    <div class="task">
+                        <form id="editForm" action="/edit" method="post">
+                            <button id="checkBtn" type="submit"><i class="fas fa-check"></i></button>
+                            <input type="text" name="name" value="<%= task.name %>" autofocus>
+                            <input type="text" name="id" value="<%= task._id %>" hidden>
 
+                        </form>
+                    </div>
+                    <div id="backBtn">
+                        <a href="/"><i class="fas fa-undo"></i></a>
+                    </div>
+                </div>
+                <% } else { %>
                     <div class="taskRow">
-
                         <div class="task">
-                            <form id="editForm" action="/edit" method="post">
-                                <button id="checkBtn" type="submit"><i class="fas fa-check"></i></button>
-                                <input type="text" name="name" value="<%= task.name %>" autofocus>
-                                <input type="text" name="id" value="<%= task._id %>" hidden>
-
-                            </form>
+                            <a id="editBtn" href="/edit/<%= data[i]._id %>"><i class="fas fa-pen"></i></a>
+                            <div id="nameDateWrapper">
+                                <span id="taskName"><%= data[i].name %></span>
+                                <span id="taskDate"><%= data[i].date.toString().split(" ").slice(0, 4).join(" ") %></span>
+                            </div>
                         </div>
-                        <div id="backBtn">
-                            <a href="/"><i class="fas fa-undo"></i></a>
+
+                        <div id="deleteBtn">
+                            <a href="/delete/<%= data[i]._id %>"><i class="fas fa-times"></i></a>
                         </div>
                     </div>
-                    <% } else { %>
-                        <div class="taskRow">
-                            <div class="task">
-                                <a id="editBtn" href="/edit/<%= data[i]._id %>"><i class="fas fa-pen"></i></a>
-                                <div id="nameDateWrapper">
-                                    <span id="taskName"><%= data[i].name %></span>
-                                    <span id="taskDate"><%= data[i].date.toString().split(" ").slice(0, 4).join(" ") %></span>
-                                </div>
-                            </div>
+                    <% } %>
 
-                            <div id="deleteBtn">
-                                <a href="/delete/<%= data[i]._id %>"><i class="fas fa-times"></i></a>
-                            </div>
-                        </div>
                         <% } %>
 
-                            <% } %>
-
-                                <% if(totalPages !== dataToShow/dataToShowPerReq) { %>
-                                    <a class="paginationBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)+1%>"><i class="fas fa-chevron-down"></i></a>
-
-                                    <% } else { %>
-
-                                        <a class="paginationBtn" href="/?page=1"><i class="fas fa-chevron-up"></i></a>
-
-                                        <% } %>
-
+                            <%- include('include/_pagination') %>
 
 </body>
 

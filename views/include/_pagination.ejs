@@ -1,0 +1,8 @@
+<% if(totalPages !== dataToShow/dataToShowPerReq) { %>
+    <a class="paginationBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)+1%>"><i class="fas fa-chevron-down"></i></a>
+
+    <% } else { %>
+
+        <a class="paginationBtn" href="/?page=1"><i class="fas fa-chevron-up"></i></a>
+
+        <% } %>

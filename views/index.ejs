@@ -4,45 +4,29 @@
 <%- include('include/_head') %>
 
     <body>
-        <h1>Your tasks</h1>
 
-        <%- include("add-data.ejs") %>
+        <%- include('include/_add-sort') %>
 
-            <div id="list">
-                <div id="sortBtnWrapper">
-                    Sort by
-                    <a class="sortBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)%>&&sorted=-1">Newest</a> /
-                    <a class="sortBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)%>&&sorted=1">Oldest</a>
-                </div>
+            <% for(let i=0; i<data.length; i++) { %>
 
-                <% for(let i=0; i<data.length; i++) { %>
+                <div class="taskRow">
 
-                    <div class="taskRow">
+                    <div class="task">
 
-                        <div class="task">
-
-                            <a id="editBtn" href="/edit/<%= data[i]._id %>"><i class="fas fa-pen"></i></a>
-                            <div id="nameDateWrapper">
-                                <span id="taskName"><%= data[i].name %></span>
-                                <span id="taskDate"><%= data[i].date.toString().split(" ").slice(0, 4).join(" ") %></span>
-                            </div>
+                        <a id="editBtn" href="/edit/<%= data[i]._id %>?page=<%= page %>&&sorted=<%= sorted %>"><i class="fas fa-pen"></i></a>
+                        <div id="nameDateWrapper">
+                            <span id="taskName"><%= data[i].name %></span>
+                            <span id="taskDate"><%= data[i].date.toString().split(" ").slice(0, 4).join(" ") %></span>
                         </div>
-                        <div id="deleteBtn">
-                            <a href="/delete/<%= data[i]._id %>"><i class="fas fa-times"></i></a>
-                        </div>
-
                     </div>
-                    <% } %>
+                    <div id="deleteBtn">
+                        <a href="/delete/<%= data[i]._id %>"><i class="fas fa-times"></i></a>
+                    </div>
 
-                        <% if(totalPages !== dataToShow/dataToShowPerReq) { %>
-                            <a class="paginationBtn" href="/?page=<%=(dataToShow/dataToShowPerReq)+1%>"><i class="fas fa-chevron-down"></i></a>
+                </div>
+                <% } %>
 
-                            <% } else { %>
-
-                                <a class="paginationBtn" href="/?page=1"><i class="fas fa-chevron-up"></i></a>
-
-                                <% } %>
-
+                    <%- include('include/_pagination') %>
 
     </body>
 
