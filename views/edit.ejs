@@ -36,7 +36,7 @@
                 <% } else { %>
                     <div class="taskRow">
                         <div class="task">
-                            <a id="editBtn" href="/edit/<%= data[i]._id %>"><i class="fas fa-pen"></i></a>
+                            <a id="editBtn" href="/edit/<%= data[i]._id %>?page=<%= page %>&&sorted=<%= sorted %>"><i class="fas fa-pen"></i></a>
                             <div id="nameDateWrapper">
                                 <span id="taskName"><%= data[i].name %></span>
                                 <span id="taskDate"><%= data[i].date.toString().split(" ").slice(0, 4).join(" ") %></span>
