@@ -12,7 +12,7 @@ The purpose of the project is to learn CRUD - creating, reading, updating and de
 ```npm i``` in terminal
 
 - To run application run command 
-```npm start``` in terminal
+```npm start```
 
 Note that the URI to my database is stored in a hidden .env file that is not included in this repository, 
 so you will need to register your own account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) in order to use this app.
