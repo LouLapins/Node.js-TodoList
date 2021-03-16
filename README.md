@@ -8,10 +8,10 @@ The purpose of the project is to learn CRUD - creating, reading, updating and de
 
 - Clone the repository: ```https://github.com/LouLapins/Node.js-TodoList.git```
 
-- To install all dependencies
+- To install all dependencies run command
 ```npm i``` in terminal
 
-- To run application
+- To run application run command 
 ```npm start``` in terminal
 
 Note that the URI to my database is stored in a hidden .env file that is not included in this repository, 
